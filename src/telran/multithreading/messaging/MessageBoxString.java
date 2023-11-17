@@ -8,6 +8,12 @@ public class MessageBoxString implements MessageBox {
 
 	@Override
 	synchronized public void put(String message) {
+		while (this.message != null) {
+			try {
+				this.wait();
+			} catch (InterruptedException e) {
+			}
+		}
 		this.message = message;
 		this.notify();
 	}
@@ -19,12 +25,16 @@ public class MessageBoxString implements MessageBox {
 		}
 		String res = message;
 		message = null;
+		notify();
 		return res;
 	}
 
 	@Override
 	synchronized public String pull() {
-		return message;
+		String str = message;
+		message = null;
+		notify();
+		return str;
 	}
 
 }
