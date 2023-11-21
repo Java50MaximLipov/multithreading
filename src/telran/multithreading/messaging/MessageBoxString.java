@@ -25,7 +25,7 @@ public class MessageBoxString implements MessageBox {
 		}
 		String res = message;
 		message = null;
-		notify();
+		notifyAll();
 		return res;
 	}
 
@@ -33,7 +33,7 @@ public class MessageBoxString implements MessageBox {
 	synchronized public String pull() {
 		String str = message;
 		message = null;
-		notify();
+		notifyAll();
 		return str;
 	}
 
